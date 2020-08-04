@@ -38,3 +38,16 @@ require_once( 'codes/setup-homepage-category-permalinks.php' );
  * ELIMINATE RENDER-BLOCKING RESOURCES
  * ------------------------------------------------------------------------- */
 
+
+
+/* --------------------------------------------------------------------------------------------
+ * Signature Shortcode
+ * --------------
+ * THIS SHORTCODE SIMPLY RETURNS THE CURRENT SITE ADDRESS
+ * BEST USED FOR IMAGES STORED IN THE SERVER WHICH CAN'T BE ACCESSED WITHIN WORDPRESS
+ * ----------------------------------------------------------------------------------------- */
+add_shortcode( 'spk_site_url', 'setup_return_site_url' );
+function setup_return_site_url() {
+	return site_url();
+}
+

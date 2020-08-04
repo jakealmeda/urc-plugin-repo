@@ -44,7 +44,7 @@ function setup_category_permalink( $atts ) {
             $slug = $atts[ 'slug' ];
 
 			if( is_numeric( $slug ) ) {
-				
+				//echo 'TRUE';	
 				// $slug used might be the category ID
 				$catid = get_term_by( 'id', $slug, 'category' );
 				
@@ -65,7 +65,8 @@ function setup_category_permalink( $atts ) {
 
 				// $slug is either the category slug or name
 				$cat = get_term_by( 'slug', $slug, 'category' );
-
+				//$x = get_category_by_slug( $slug );
+				//echo $x->term_id.'<hr>';
 				$cat_id = $cat->term_taxonomy_id;
 
 				// check if $text is specified
@@ -75,7 +76,7 @@ function setup_category_permalink( $atts ) {
 
 				if( !empty( $cat_id ) ) {
 
-					$return = '<a href="'.get_category_link( $cat_id ).'" '.$class.'>'.$text.'</a> | '.$cat_id;
+					$return = '<a href="'.get_category_link( $cat_id ).'" '.$class.'>'.$text.'</a>';
 
 				} else {
 
