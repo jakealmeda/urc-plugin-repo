@@ -33,6 +33,7 @@ if( is_array( $these_files ) ) {
 
 }*/
 require_once( 'codes/setup-homepage-category-permalinks.php' );
+require_once( 'codes/setup-optimize.php' );
 
 /* ----------------------------------------------------------------------------
  * ELIMINATE RENDER-BLOCKING RESOURCES
