@@ -16,24 +16,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 /* ----------------------------------------------------------------------------
  * INCLUDE OTHER PLUGIN FILES
  * ------------------------------------------------------------------------- */
-/*$these_files = array( 'setup-homepage-category-permalinks', );
-if( is_array( $these_files ) ) {
-
-	foreach( $these_files as $val ) {
-
-		$the_file = plugin_dir_path( __FILE__ ).'codec/'.$val.'.php';
-		echo '<h2>'.$the_file.'</h2>';
-		if( file_exists( $the_file ) ) {
-			require_once( $the_file );
-		} else {
-			echo '<h1>ZZZZ!</h1>';
-		}
-
-	}
-
-}*/
 require_once( 'codes/setup-homepage-category-permalinks.php' );
 require_once( 'codes/setup-optimize.php' );
+require_once( 'codes/setup_su_post_get.php' );
 
 /* ----------------------------------------------------------------------------
  * ELIMINATE RENDER-BLOCKING RESOURCES
