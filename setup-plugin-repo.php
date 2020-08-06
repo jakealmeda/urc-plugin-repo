@@ -37,3 +37,12 @@ function setup_return_site_url() {
 	return site_url();
 }
 
+
+/* --------------------------------------------------------------------------------------------
+ * THIS SHORTCODE SIMPLY RETURNS CURRENT THEME'S (CHILD) URL
+ * MAINLY USED FOR THE PIXEL.PNG FOUND IN PAYPAL BUTTONS
+ * ----------------------------------------------------------------------------------------- */
+add_shortcode( 'setup-current-theme-url', 'setup_current_theme_url' );
+function setup_current_theme_url() {
+	return get_stylesheet_directory_uri().'/';
+}
