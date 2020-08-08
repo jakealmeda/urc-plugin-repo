@@ -63,40 +63,14 @@ function setup_category_permalink( $atts ) {
 
 			} else {
 
-				// $slug is either the category slug or name
-				$cat = get_term_by( 'slug', $slug, 'category' );
-				//$x = get_category_by_slug( $slug );
-				//echo $x->term_id.'<hr>';
-				$cat_id = $cat->term_taxonomy_id;
+				$categ_obj = get_category_by_slug( $slug );
 
-				// check if $text is specified
 				if( empty( $text ) ) {
-					$text = strtoupper( $cat->name );
+					$text = $categ_obj->name;
 				}
-
-				if( !empty( $cat_id ) ) {
-
-					$return = '<a href="'.get_category_link( $cat_id ).'" '.$class.'>'.$text.'</a>';
-
-				} else {
-
-					$cats = get_term_by( 'name', $slug, 'category' );
-
-					$cats_id = $cats->term_taxonomy_id;
-
-					// check if $text is specified
-					if( empty( $text ) ) {
-						$text = strtoupper( $cats->name );
-					}
-
-					if( !empty( $cats_id ) ) {
-
-						$return = '<a href="'.get_category_link( $cats_id ).'" '.$class.'>'.$text.'</a>';
-
-					}
-
-				}
-
+				
+				$return = '<strong><a href="'.get_category_link( $categ_obj->term_id ).'" '.$class.'>'.$text.'</a></strong>';
+				
 			}
 
         }
@@ -114,9 +88,13 @@ function setup_category_permalink( $atts ) {
 
     		return '<span '.$wrapper_class.'>'.$return.'</span>';
 
-    	} else {
+    	} elseif( $wrapper == 'p' ) {
 
     		return '<p '.$wrapper_class.'>'.$return.'</p>';
+
+    	} else {
+
+    		return $return;
 
     	}
 
