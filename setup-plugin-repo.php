@@ -64,3 +64,21 @@ function setup_paypal_sbcp_2_func() {
 	return '<input onclick="PC_PhoneCoaching()" alt="PayPal - The safer, easier way to pay online!" name="submit" class="space-bottom-half cta-buy-paypalbutton aligncenter" src="'.get_stylesheet_directory_uri().'/assets/images/pixel.png" type="image">';
 }
 
+
+/* --------------------------------------------------------------------------------------------
+ * | ENQUEUE SCRIPTS
+ * ----------------------------------------------------------------------------------------- */
+add_action( 'wp_footer', 'setup_plugin_repository_function', 2 );
+function setup_plugin_repository_function() {
+
+	$scripts = array( 'jquery-ui-accordion' );
+	foreach ( $scripts as $value ) {
+		if( !wp_script_is( $value, 'enqueued' ) ) {
+        	wp_enqueue_script( $value );
+    	}
+	}
+
+    // ACCORDION
+    wp_enqueue_script( 'setup_plugin_repo_accordion', plugins_url( 'js/asset_accordion.js', __FILE__ ) );
+
+}
