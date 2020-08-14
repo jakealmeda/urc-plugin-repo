@@ -16,17 +16,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 /* ----------------------------------------------------------------------------
  * INCLUDE OTHER PLUGIN FILES
  * ------------------------------------------------------------------------- */
-require_once( 'mobile-detect/Mobile_Detect.php' );
+//require_once( 'mobile-detect/Mobile_Detect.php' );
 require_once( 'codes/setup-homepage-category-permalinks.php' );
 require_once( 'codes/setup-optimize.php' );
 require_once( 'codes/setup_su_post_get.php' );
 //require_once( 'codes/setup-mobile-front.php' );
+require_once( 'codes/setup-paypal-buttons.php' );
+require_once( 'codes/spk_get_permalink.php' );
 
 
 /* ----------------------------------------------------------------------------
- * ELIMINATE RENDER-BLOCKING RESOURCES
+ * OPTIMIZE FILE - ELIMINATE RENDER-BLOCKING RESOURCES
  * ------------------------------------------------------------------------- */
-
+require_once( 'codes/setup-purge.php' );
 
 
 /* --------------------------------------------------------------------------------------------
@@ -38,33 +40,6 @@ require_once( 'codes/setup_su_post_get.php' );
 add_shortcode( 'spk_site_url', 'setup_return_site_url' );
 function setup_return_site_url() {
 	return site_url();
-}
-
-
-/* --------------------------------------------------------------------------------------------
- * DONATE BUTTON
- * ----------------------------------------------------------------------------------------- */
-add_shortcode( 'setup_paypal_donate_button', 'setup_paypal_donate_button_func' );
-function setup_paypal_donate_button_func() {
-	return '<input type="image" src="'.get_stylesheet_directory_uri().'/assets/images/pixel.png" class="space-bottom-half cta-donate-paypalbutton aligncenter" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">';
-}
-
-
-/* --------------------------------------------------------------------------------------------
- * BUY BUTTON (Phone Coaching - 1st button)
- * ----------------------------------------------------------------------------------------- */
-add_shortcode( 'setup_paypal_sbcp', 'setup_paypal_sbcp_func' );
-function setup_paypal_sbcp_func() {	
-	return '<input onclick="PC_PhoneCoaching()" alt="PayPal - The safer, easier way to pay online!" name="submit" class="space-bottom-half cta-paypal" src="'.get_stylesheet_directory_uri().'/assets/images/pixel.png" type="image">';
-}
-
-
-/* --------------------------------------------------------------------------------------------
- * BUY BUTTON (Phone Coaching - 2nd button)
- * ----------------------------------------------------------------------------------------- */
-add_shortcode( 'setup_paypal_sbcp_2', 'setup_paypal_sbcp_2_func' );
-function setup_paypal_sbcp_2_func() {
-	return '<input onclick="PC_PhoneCoaching()" alt="PayPal - The safer, easier way to pay online!" name="submit" class="space-bottom-half cta-buy-paypalbutton aligncenter" src="'.get_stylesheet_directory_uri().'/assets/images/pixel.png" type="image">';
 }
 
 
