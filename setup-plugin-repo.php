@@ -28,7 +28,7 @@ require_once( 'codes/spk_get_permalink.php' );
 /* ----------------------------------------------------------------------------
  * OPTIMIZE FILE - ELIMINATE RENDER-BLOCKING RESOURCES
  * ------------------------------------------------------------------------- */
-require_once( 'codes/setup-purge.php' );
+//require_once( 'codes/setup-purge.php' );
 
 
 /* --------------------------------------------------------------------------------------------
