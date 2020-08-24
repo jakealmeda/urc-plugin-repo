@@ -16,19 +16,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 /* ----------------------------------------------------------------------------
  * INCLUDE OTHER PLUGIN FILES
  * ------------------------------------------------------------------------- */
-//require_once( 'mobile-detect/Mobile_Detect.php' );
+	//require_once( 'mobile-detect/Mobile_Detect.php' );
 require_once( 'codes/setup-homepage-category-permalinks.php' );
-require_once( 'codes/setup-optimize.php' );
+	//require_once( 'codes/setup-optimize.php' );
+require_once( 'codes/setup-optimize-2.php' );
 require_once( 'codes/setup_su_post_get.php' );
-//require_once( 'codes/setup-mobile-front.php' );
 require_once( 'codes/setup-paypal-buttons.php' );
 require_once( 'codes/spk_get_permalink.php' );
-
-
-/* ----------------------------------------------------------------------------
- * OPTIMIZE FILE - ELIMINATE RENDER-BLOCKING RESOURCES
- * ------------------------------------------------------------------------- */
-//require_once( 'codes/setup-purge.php' );
+	//require_once( 'codes/setup_soliloquy.php' );
 
 
 /* --------------------------------------------------------------------------------------------
@@ -57,6 +52,13 @@ function setup_plugin_repository_function() {
 	}
 
     // ACCORDION
-    wp_enqueue_script( 'setup_plugin_repo_accordion', plugins_url( 'js/asset_accordion.js', __FILE__ ) );
+    wp_enqueue_script( 'setup_plugin_repo_accordion', plugins_url( 'js/asset_accordion_min.js', __FILE__ ) );
 
 }
+
+
+/* --------------------------------------------------------------------------------------------
+ * | Execute shortcodes in widget
+ * ----------------------------------------------------------------------------------------- */
+add_filter( 'widget_text', 'do_shortcode' );
+

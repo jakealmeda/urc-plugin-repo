@@ -1,0 +1,1 @@
+jQuery("div#accordion").each(function(c,e){jQuery(this).accordion({collapsible:!0,heightStyle:"content"})});
