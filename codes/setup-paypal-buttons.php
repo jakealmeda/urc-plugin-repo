@@ -7,49 +7,46 @@ if ( ! defined( 'ABSPATH' ) ) {
 // PAYPAL BUTTONS
 
 /* --------------------------------------------------------------------------------------------
- * DONATE BUTTON
+ * Sidebar Coaching Phone 191115
+ * Link: https://cor.smarterwebpackage.com/wp-admin/post.php?post=37707&action=edit
  * ----------------------------------------------------------------------------------------- */
-add_shortcode( 'setup_paypal_donate_button', 'setup_paypal_donate_button_func' );
-function setup_paypal_donate_button_func() {
-	return '<input type="image" src="'.get_stylesheet_directory_uri().'/assets/images/pixel.png" class="space-bottom-half cta-donate-paypalbutton aligncenter" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">';
+add_shortcode( 'setup_paypal_sbcp_191115', 'setup_paypal_sbcp_191115_func' );
+function setup_paypal_sbcp_191115_func() {
+	return '<input onclick="PC_PhoneCoaching()" type="submit" alt="PayPal - The safer, easier way to pay online!" name="submit" value="Buy Now on Paypal" class="button fontsize-tiny space-bottom-half" src="'.get_stylesheet_directory_uri().'/assets/images/pixel.png">';
 }
 
-
-/* --------------------------------------------------------------------------------------------
- * BUY BUTTON (Phone Coaching - 1st button)
- * ----------------------------------------------------------------------------------------- */
-add_shortcode( 'setup_paypal_sbcp', 'setup_paypal_sbcp_func' );
-function setup_paypal_sbcp_func() {	
+add_shortcode( 'setup_paypal_sbcp_191115_2', 'setup_paypal_sbcp_191115_2_func' );
+function setup_paypal_sbcp_191115_2_func() {
 	return '<input onclick="PC_PhoneCoaching()" alt="PayPal - The safer, easier way to pay online!" name="submit" class="space-bottom-half cta-paypal" src="'.get_stylesheet_directory_uri().'/assets/images/pixel.png" type="image">';
 }
 
-
-/* --------------------------------------------------------------------------------------------
- * BUY BUTTON (Phone Coaching - 2nd button)
- * ----------------------------------------------------------------------------------------- */
-add_shortcode( 'setup_paypal_sbcp_2', 'setup_paypal_sbcp_2_func' );
-function setup_paypal_sbcp_2_func() {
+add_shortcode( 'setup_paypal_sbcp_191115_3', 'setup_paypal_sbcp_191115_3_func' );
+function setup_paypal_sbcp_191115_3_func() {
 	return '<input onclick="PC_PhoneCoaching()" alt="PayPal - The safer, easier way to pay online!" name="submit" class="space-bottom-half cta-buy-paypalbutton aligncenter" src="'.get_stylesheet_directory_uri().'/assets/images/pixel.png" type="image">';
 }
 
 
 /* --------------------------------------------------------------------------------------------
- * for this page: https://cor.smarterwebpackage.com/wp-admin/post.php?post=26337&action=edit
+ * Donate
+ * Link: https://cor.smarterwebpackage.com/wp-admin/post.php?post=26341&action=edit
  * ----------------------------------------------------------------------------------------- */
-add_shortcode( 'setup_paypal_coachingphone', 'setup_paypal_coachingphone_func' );
-function setup_paypal_coachingphone_func() {
-	return '<input alt="PayPal - The safer, easier way to pay online!" name="submit" class="space-bottom-half cta-paypal" src="'.get_stylesheet_directory_uri().'/assets/images/pixel.png" type="image">';
-}
-add_shortcode( 'setup_paypal_coachingphone_2', 'setup_paypal_coachingphone_func_2' );
-function setup_paypal_coachingphone_func_2() {
-	return '<input alt="PayPal - The safer, easier way to pay online!" name="submit" class="space-bottom-half cta-buy-paypalbutton aligncenter" src="'.get_stylesheet_directory_uri().'/assets/images/pixel.png" type="image">';
+add_shortcode( 'setup_sb_donate', 'setup_sb_donate_func' );
+function setup_sb_donate_func() {
+	return '<input type="image" src="'.get_stylesheet_directory_uri().'/assets/images/pixel.png" class="space-bottom-half cta-donate-paypalbutton aligncenter" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">';
 }
 
+
 /* --------------------------------------------------------------------------------------------
- * for this page: https://cor.smarterwebpackage.com/wp-admin/post.php?post=22708&action=edit
+ * Product PhoneCoaching CTA
+ * Link: https://cor.smarterwebpackage.com/wp-admin/post.php?post=22708&action=edit
  * ----------------------------------------------------------------------------------------- */
-add_shortcode( 'setup_paypal_product_phonecoaching_cta', 'setup_paypal_product_phonecoaching_cta_func' );
-function setup_paypal_product_phonecoaching_cta_func() {
+add_shortcode( 'setup_product_phonecoaching_cta', 'setup_product_phonecoaching_cta_func' );
+function setup_product_phonecoaching_cta_func() {
 	return '<input type="submit" alt="PayPal - The safer, easier way to pay online!" name="submit" value="Buy Now on Paypal" class="button fontsize-tiny space-bottom-half" src="'.get_stylesheet_directory_uri().'/assets/images/pixel.png">';
+}
+
+add_shortcode( 'setup_product_phonecoaching_cta_2', 'setup_product_phonecoaching_cta_2_func' );
+function setup_product_phonecoaching_cta_2_func() {
+	return '<input alt="PayPal - The safer, easier way to pay online!" name="submit" class="space-bottom-half cta-paypal" src="'.get_stylesheet_directory_uri().'/assets/images/pixel.png" type="image">';
 }
 
