@@ -13,5 +13,6 @@ if( $detect->isMobile() ) {
 
     // show a div to push more contents away from critical view
     //add_action( 'genesis_before_content_sidebar_wrap', 'setup_show_in_mobile' ); 
+    add_filter( 'genesis_pre_get_option_site_layout', '__genesis_return_full_width_content' );
 
 }
