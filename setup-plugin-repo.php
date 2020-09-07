@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Setup Plugin Repository
+ * Plugin Name: URC Plugin Repository
  * Description: Full control over URC plugins
  * Version: 1.0
  * Author: Jake Almeda
