@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * INCLUDE OTHER PLUGIN FILES
  * ------------------------------------------------------------------------- */
 require_once( 'mobile-detect/Mobile_Detect.php' );
-require_once( 'codes/setup-mobile-front.php' );
+require_once( 'codes/setup-mobile.php' );
 require_once( 'codes/setup-homepage-category-permalinks.php' );
 	//require_once( 'codes/setup-optimize.php' );
 require_once( 'codes/setup-optimize-2.php' );

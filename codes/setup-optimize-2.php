@@ -8,6 +8,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 
+//INITIALIZE MOBILE DETECT PLUGIN
+$detect = new Mobile_Detect;
+
+
 add_action( 'wp_print_styles', 'setup_dequeue_css_function', 100 ); // dequeue styles
 add_action( 'wp_enqueue_scripts', 'setup_dequeue_css_function' );
 add_action( 'wp_head', 'setup_inline_styles_in_head', 1 ); // inline non-critical in wp_head
@@ -26,8 +30,14 @@ function setup_inline_styles_in_head() {
 
     ?><style><?php
 
-    // MAIN THEME'S STYLES
-    $main_css = file_get_contents( get_stylesheet_directory_uri().'/assets/css/main-min.css' );
+    if( $detect->isMobile() ) {
+        // MOBILE STYLESHEET
+        $main_css = file_get_contents( get_stylesheet_directory_uri().'/assets/css/mobile-min.css' );
+    } else {
+        // MAIN STYLESHEET
+        $main_css = file_get_contents( get_stylesheet_directory_uri().'/assets/css/main-min.css' );
+    }
+
     if( !empty( $main_css ) ) {
         $look_for = '/images/';
         $replace_with = get_stylesheet_directory_uri().'/assets'.$look_for;
