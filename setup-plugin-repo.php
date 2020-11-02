@@ -33,9 +33,18 @@ require_once( 'codes/spk_get_permalink.php' );
  * THIS SHORTCODE SIMPLY RETURNS THE CURRENT SITE ADDRESS
  * BEST USED FOR IMAGES STORED IN THE SERVER WHICH CAN'T BE ACCESSED WITHIN WORDPRESS
  * ----------------------------------------------------------------------------------------- */
-add_shortcode( 'spk_site_url', 'setup_return_site_url' );
-function setup_return_site_url() {
-	return site_url();
+if( !shortcode_exists( 'spk_site_url' ) ) {
+
+	add_shortcode( 'spk_site_url', 'setup_return_site_url' );
+	
+	if( !function_exists( 'setup_return_site_url' ) ) {
+
+		function setup_return_site_url() {
+			return site_url();
+		}
+		
+	}
+
 }
 
 
