@@ -14,16 +14,20 @@ add_action( 'wp_enqueue_scripts', 'setup_dequeue_css_function' );
 add_action( 'wp_footer', 'setup_dequeue_css_function' );
 function setup_dequeue_css_function() {
 	// 'setup_video_block_style', 
-	$css_ids = array( 'ea-style', 'dashicons', 'wp-block-library', 'setup_log_style', 'megamenu' );
+	$css_ids = array( 'ea-style', 'wp-block-library', 'setup_log_style', 'megamenu' );
+
+
+	// check if user is signed in
+	if( !is_user_logged_in() ) {
+		$css_ids[] = 'dashicons';
+	}
+
+
 	foreach( $css_ids as $ids ) {
 		setup_check_enqueued_styles( $ids );	
 	}
 
 }
-
-
-// INLINE DEFAULT STYLESHEET IN HEAD
-add_action( 'wp_head', 'setup_inline_styles_in_head', 1 );
 
 
 //INITIALIZE MOBILE DETECT PLUGIN
@@ -58,6 +62,9 @@ if( $detect->isMobile() ) {
 	// JS FOOTER
 	add_action( 'wp_footer', 'setup_mobile_js_inline_footer', 1000 );
 
+	// CTA
+	add_action( 'genesis_before_content', 'setup_cta_icons_function' );
+
 } else {
 
 	// viewer is using desktop
@@ -66,51 +73,11 @@ if( $detect->isMobile() ) {
 }
 
 
-// REGISTER CUSTOM MENU FOR MOBILE
-add_action( 'init', 'setup_register_custom_menu_fn' );
-function setup_register_custom_menu_fn() {
-
-	register_nav_menu( 'mobile-menu', __( 'Mobile Menu' ) );
-
-}
 
 
-// ADD MOBILE MENU
-function setup_add_mobile_menu_fn() {
 
-	global $mobile;
-
-	if( !is_admin() && !empty( $mobile ) ) {
-
-		?>	
-		<div class="nav-primary" id="genesis-nav-primary">
-			<div class="wrap">
-				<div id="mega-menu-wrap-primary" class="mega-menu-wrap">
-					<?php 																		//mega-menu-toggle
-					wp_nav_menu( array( 'theme_location' => 'mobile-menu', 'container_class' => 'genesis-nav-menu' ) );
-					?>
-				</div>
-			</div>
-		</div>
-		<?php
-
-	}
-
-}
-
-
-// DEREGISTER OTHER STYLING ON MOBILE ONLY FUNCTION
-/*function setup_dequeue_styling_for_mobile() {
-	
-	$array = array( 'dashicons', 'wp-block-library', 'setup_log_style', 'megamenu' );
-	foreach( $array as $ids ) {
-		setup_check_enqueued_styles( $ids );	
-	}
-
-}*/
-
-
-// HEAD | INLINE STYLES
+// INLINE STYLESHEET IN HEAD
+add_action( 'wp_head', 'setup_inline_styles_in_head', 1 );
 function setup_inline_styles_in_head() {
 
 	global $mobile;
@@ -157,15 +124,14 @@ function setup_inline_styles_in_head() {
 	    if( !empty( $max_mm ) ) {
 	    	echo $max_mm;
 	    }
-	    
 
 	    // DASHICONS
-	    $dashicons_css = file_get_contents( includes_url().'/css/dashicons.min.css' );
+	    $dashicons_css = file_get_contents( includes_url().'css/dashicons.min.css' );
 	    if( !empty( $dashicons_css ) ) {
 	        echo $dashicons_css;
 	    }
 
-	    $wp_block_library = file_get_contents( includes_url().'/css/dist/block-library/style.min.css' );
+	    $wp_block_library = file_get_contents( includes_url().'css/dist/block-library/style.min.css' );
 	    if( !empty( $wp_block_library ) ) {
 	    	echo $wp_block_library;
 	    }
@@ -173,18 +139,62 @@ function setup_inline_styles_in_head() {
 	    // SETUP LOG
 	    $setup_log_styles = file_get_contents( plugins_url().'/setup-log/css/setup_log_style.css' );
 	    if( !empty( $setup_log_styles ) ) {
-	    	echo setup_minify_css( $setup_log_styles );
+	    	echo $setup_log_styles;
 	    }
 
 	    // SETUP VIDEO BLOCK
 	    $setup_video_block_styles = file_get_contents( plugins_url().'setup-video-block/css/setup-video-block-style.css' );
 	    if( !empty( $setup_video_block_styles ) ) {
-	    	echo setup_minify_css( $setup_video_block_styles );
+	    	echo $setup_video_block_styles;
 	    }
 
     ?></style><?php
 
 }
+
+
+// REGISTER CUSTOM MENU FOR MOBILE
+add_action( 'init', 'setup_register_custom_menu_fn' );
+function setup_register_custom_menu_fn() {
+
+	register_nav_menu( 'mobile-menu', __( 'Mobile Menu' ) );
+
+}
+
+
+// ADD MOBILE MENU
+function setup_add_mobile_menu_fn() {
+
+	global $mobile;
+
+	if( !is_admin() && !empty( $mobile ) ) {
+
+		?>	
+		<div class="nav-primary" id="genesis-nav-primary">
+			<div class="wrap">
+				<div id="mega-menu-wrap-primary" class="mega-menu-wrap">
+					<?php 																		//mega-menu-toggle
+					wp_nav_menu( array( 'theme_location' => 'mobile-menu', 'container_class' => 'genesis-nav-menu' ) );
+					?>
+				</div>
+			</div>
+		</div>
+		<?php
+
+	}
+
+}
+
+
+// DEREGISTER OTHER STYLING ON MOBILE ONLY FUNCTION
+/*function setup_dequeue_styling_for_mobile() {
+	
+	$array = array( 'dashicons', 'wp-block-library', 'setup_log_style', 'megamenu' );
+	foreach( $array as $ids ) {
+		setup_check_enqueued_styles( $ids );	
+	}
+
+}*/
 
 
 // ECHO JAVASCRIPTS

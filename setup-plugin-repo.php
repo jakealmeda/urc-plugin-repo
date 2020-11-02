@@ -13,6 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
 
+require_once( 'urc-cta.php' );
 /* ----------------------------------------------------------------------------
  * INCLUDE OTHER PLUGIN FILES
  * ------------------------------------------------------------------------- */
