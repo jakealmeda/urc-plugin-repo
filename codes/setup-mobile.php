@@ -13,21 +13,35 @@ add_action( 'wp_print_styles', 'setup_dequeue_css_function', 100 );
 add_action( 'wp_enqueue_scripts', 'setup_dequeue_css_function' );
 add_action( 'wp_footer', 'setup_dequeue_css_function' );
 function setup_dequeue_css_function() {
-	// 'setup_video_block_style', 
-	$css_ids = array( 'ea-style', 'wp-block-library', 'setup_log_style', 'megamenu' );
+	// 'setup_log_style',
+	$css_ids = array( 'ea-style', 'wp-block-library', 'megamenu', 'setup_video_block_style' );
 
 
-	// check if user is signed in
+	// check if user is signed in, dequeue if not signed in (enqueued if signed in)
 	if( !is_user_logged_in() ) {
 		$css_ids[] = 'dashicons';
 	}
 
 
-	foreach( $css_ids as $ids ) {
+	foreach( $css_ids as $ids ) {//echo $ids.'<br />';
 		setup_check_enqueued_styles( $ids );	
 	}
 
 }
+
+/*
+#######################################################################################################################################
+#######################################################################################################################################
+#######################################################################################################################################
+	fix video block 	DONE
+	remove hardcoded directory path in navigation-cor.php   	DONE
+	remove all setup-log codes     DONE
+	include a list of plugins to remove in the spreadsheet
+	make ads work
+	proceed with the rest of the JS
+#######################################################################################################################################
+#######################################################################################################################################
+*/
 
 
 //INITIALIZE MOBILE DETECT PLUGIN
@@ -40,15 +54,8 @@ if( $detect->isMobile() ) {
     // FORCE LAYOUT - REMOVE SIDEBAR
     add_filter( 'genesis_pre_get_option_site_layout', '__genesis_return_full_width_content' );
 
-	// DEREGISTER OTHER STYLING ON MOBILE ONLY
-	/*add_action( 'wp_print_styles', 'setup_dequeue_styling_for_mobile', 100 );
-	add_action( 'wp_enqueue_scripts', 'setup_dequeue_styling_for_mobile' );
-	add_action( 'wp_footer', 'setup_dequeue_styling_for_mobile' );*/
-
-    // NAVIGATORS | REMOVE
-    //add_action( 'init', 'setup_remove_navigators', 0 );
-	// remove_action( 'genesis_after_header', 'genesis_do_nav' );
-	// remove_action( 'genesis_after_header', 'genesis_do_subnav' );
+    // NAVIGATORS | REMOVE PRIMARY & SECONDARY
+    // is being handled by navigator-cor.php found in themes/cor-2020/inc
     // NAVIGATOR | ADD MOBILE MENU
     add_action( 'genesis_after_header', 'setup_add_mobile_menu_fn' ); 
 
@@ -73,40 +80,57 @@ if( $detect->isMobile() ) {
 }
 
 
-
-
-
 // INLINE STYLESHEET IN HEAD
 add_action( 'wp_head', 'setup_inline_styles_in_head', 1 );
 function setup_inline_styles_in_head() {
 
 	global $mobile;
 
-    ?><style><?php
+	// WORDPRESS CONTENT FOLDER
+	$this_dir_theme = WP_CONTENT_DIR.'/themes/cor-2020/';
+	
+	// WORDPRESS PLUGINS FOLDER
+	$urc_aws_plugdir = setup_return_plugins_maindir().'/';
 
-	    if( $mobile ) {
+	// WORDPRESS INCLUDES FOLDER
+	//$urc_aws_incdir = includes_url();
+	$urc_aws_incdir = ABSPATH . WPINC . '/';
+
+    ?><style><?php
+    	
+	    if( !empty( $mobile ) ) {
 
 	        // MOBILE STYLESHEET
-	        $main_css = file_get_contents( get_stylesheet_directory_uri().'/assets/css/mobile-min.css' );
+	        //$main_css = file_get_contents( get_stylesheet_directory_uri().'/assets/css/mobile-min.css' );
+	        $main_css = file_get_contents( $this_dir_theme.'assets/css/mobile-min.css' );
 
 	    } else {
-
+	    	
 	        // MAIN STYLESHEET | NO NEED TO VALIDATE IF FILE EXISTS
-	        $main_css = file_get_contents( get_stylesheet_directory_uri().'/assets/css/main-min.css' );
+	        //$main_css = file_get_contents( get_stylesheet_directory_uri().'/assets/css/main-min.css' );
+	        $main_css = file_get_contents( $this_dir_theme.'assets/css/main-min.css' );
 
 	    }
 
 	    if( !empty( $main_css ) ) {
 
-	        $lookie = array(
-	        	'/images/',
-	        	'/fonts/',
-	        );
+	    	// not AWS
+			/*$lookie = array(
+				'/images/',
+				'/fonts/',
+			);*/
+			$lookie = array(
+				'/images/',
+				'/fonts/', //$this_dir_theme,
+			);
 
 	        foreach( $lookie as $look_for ) {
-		        //$look_for = '/images/';
-		        $replace_with = get_stylesheet_directory_uri().'/assets'.$look_for;
+		        
+		        //$replace_with = $look_dir.'assets'.$look_for;
+		        //$replace_with = $this_dir_theme.'assets'.$look_for; // AWS
+		        $replace_with = get_stylesheet_directory_uri().'/assets'.$look_for; // not AWS
 		        $main_css = str_replace( '..'.$look_for, $replace_with, $main_css );
+
 	        }
 
 	        echo $main_css;
@@ -119,33 +143,42 @@ function setup_inline_styles_in_head() {
 	    }*/
 
 	    // MAX MEGA MENU
-	    $upload_dir = wp_upload_dir(); //wp-content/uploads/maxmegamenu/style.css
-	    $max_mm = file_get_contents( $upload_dir['baseurl'].'/maxmegamenu/style.css' );
+	    /*$upload_dir = wp_upload_dir(); //wp-content/uploads/maxmegamenu/style.css
+	    $max_mm = file_get_contents( $upload_dir['baseurl'].'/maxmegamenu/style.css' );*/
+	    $max_mm = file_get_contents( WP_CONTENT_DIR.'/uploads/maxmegamenu/style.css' );
 	    if( !empty( $max_mm ) ) {
 	    	echo $max_mm;
 	    }
-
+	    
 	    // DASHICONS
-	    $dashicons_css = file_get_contents( includes_url().'css/dashicons.min.css' );
-	    if( !empty( $dashicons_css ) ) {
-	        echo $dashicons_css;
-	    }
+		if( !is_user_logged_in() ) {
 
-	    $wp_block_library = file_get_contents( includes_url().'css/dist/block-library/style.min.css' );
+			// inline if user is not logged in
+			// do not inline if use is logged in
+			$dashicons_css = file_get_contents( $urc_aws_incdir.'css/dashicons.min.css' );
+			if( !empty( $dashicons_css ) ) {
+				echo $dashicons_css;
+			}
+
+		}
+
+	    $wp_block_library = file_get_contents( $urc_aws_incdir.'css/dist/block-library/style.min.css' );
 	    if( !empty( $wp_block_library ) ) {
 	    	echo $wp_block_library;
 	    }
 
 	    // SETUP LOG
-	    $setup_log_styles = file_get_contents( plugins_url().'/setup-log/css/setup_log_style.css' );
+	    /*$setup_log_styles = file_get_contents( plugins_url().'/setup-log/css/setup_log_style.css' );
 	    if( !empty( $setup_log_styles ) ) {
 	    	echo $setup_log_styles;
-	    }
+	    }*/
 
 	    // SETUP VIDEO BLOCK
-	    $setup_video_block_styles = file_get_contents( plugins_url().'setup-video-block/css/setup-video-block-style.css' );
+	    //$setup_video_block_styles = file_get_contents( plugins_url().'setup-video-block/assets/css/setup-video-block-style.css' );
+	    $setup_video_block_styles = file_get_contents( $urc_aws_plugdir.'setup-video-block/assets/css/setup-video-block-style.css' );
 	    if( !empty( $setup_video_block_styles ) ) {
-	    	echo $setup_video_block_styles;
+	    	echo str_replace( '../images/', plugins_url().'/setup-video-block/assets/images/', $setup_video_block_styles );
+	    	//echo $setup_video_block_styles;
 	    }
 
     ?></style><?php
@@ -186,30 +219,55 @@ function setup_add_mobile_menu_fn() {
 }
 
 
-// DEREGISTER OTHER STYLING ON MOBILE ONLY FUNCTION
-/*function setup_dequeue_styling_for_mobile() {
-	
-	$array = array( 'dashicons', 'wp-block-library', 'setup_log_style', 'megamenu' );
-	foreach( $array as $ids ) {
-		setup_check_enqueued_styles( $ids );	
-	}
-
-}*/
-
-
 // ECHO JAVASCRIPTS
 function setup_mobile_js_inline_head() {
+
+	//$urc_aws_incdir = includes_url();
+	$urc_aws_incdir = ABSPATH . WPINC;
 	
 	$js_array = array(
-		includes_url().'/js/jquery/jquery.js',
-		includes_url().'/js/jquery/ui/core.min.js',
-		includes_url().'/js/jquery/ui/effect.min.js',
-		includes_url().'/js/jquery/ui/effect-slide.min.js',
-		includes_url().'/js/jquery/ui/effect-fade.min.js',
-		includes_url().'/js/jquery/ui/widget.min.js',
-		includes_url().'/js/jquery/ui/accordion.min.js',
+		$urc_aws_incdir.'/js/jquery/jquery.js',
+		$urc_aws_incdir.'/js/jquery/ui/core.min.js',
+		$urc_aws_incdir.'/js/jquery/ui/effect.min.js',
+		$urc_aws_incdir.'/js/jquery/ui/effect-slide.min.js',
+		$urc_aws_incdir.'/js/jquery/ui/effect-fade.min.js',
+		$urc_aws_incdir.'/js/jquery/ui/widget.min.js',
+		$urc_aws_incdir.'/js/jquery/ui/accordion.min.js',
 	);
 
+	if( is_array( $js_array ) ) {
+		setup_echo_javascripts( $js_array );
+	}
+
+}
+
+
+// INLINE JAVASCRIPT IN FOOTER
+function setup_mobile_js_inline_footer() {
+	/*
+		ea-global
+		comment-reply
+		setup_log_script
+		hoverIntent
+
+		https://staging-corsite.kinsta.cloud/wp-includes/js/hoverIntent.min.js?ver=1.8.1
+		https://staging-corsite.kinsta.cloud/wp-content/themes/cor-2020/assets/js/global-min.js?ver=1602221100
+		https://staging-corsite.kinsta.cloud/wp-includes/js/comment-reply.min.js?ver=5.5.1
+		https://staging-corsite.kinsta.cloud/wp-content/themes/genesis/lib/js/skip-links.min.js?ver=3.3.3
+		https://staging-corsite.kinsta.cloud/wp-content/plugins/urc-plugin-repo/js/asset_accordion_min.js?ver=5.5.1
+	*/
+	
+	//$urc_aws_plugdir = plugins_url();
+	$urc_aws_plugdir = setup_return_plugins_maindir();
+	
+	$js_array = array(
+		$urc_aws_plugdir.'/wp-smush-pro/app/assets/js/smush-lazy-load.min.js',
+		$urc_aws_plugdir.'/megamenu/js/maxmegamenu.js',
+		$urc_aws_plugdir.'/setup-social-toolbar/js/asset-min.js',
+		$urc_aws_plugdir.'/setup-youtube/js/asset-2-min.js',
+		$urc_aws_plugdir.'/setup-video-block/js/asset-min.js',
+	);
+	
 	if( is_array( $js_array ) ) {
 		setup_echo_javascripts( $js_array );
 	}
@@ -301,47 +359,6 @@ function setup_dequeue_enqueued_scripts_fn() {
 }
 
 
-// INLINE JAVASCRIPT IN FOOTER
-function setup_mobile_js_inline_footer() {
-	/*
-		smush-lazy-load
-		ea-global
-		comment-reply
-		setup_log_script
-		hoverIntent
-
-		https://staging-corsite.kinsta.cloud/wp-includes/js/hoverIntent.min.js?ver=1.8.1
-		https://staging-corsite.kinsta.cloud/wp-content/plugins/setup-log/js/asset.js
-		https://staging-corsite.kinsta.cloud/wp-content/themes/cor-2020/assets/js/global-min.js?ver=1602221100
-		https://staging-corsite.kinsta.cloud/wp-includes/js/comment-reply.min.js?ver=5.5.1
-		https://staging-corsite.kinsta.cloud/wp-content/themes/genesis/lib/js/skip-links.min.js?ver=3.3.3
-
-		https://staging-corsite.kinsta.cloud/wp-content/plugins/setup-video-block/js/asset.js?ver=1.0
-		https://staging-corsite.kinsta.cloud/wp-content/plugins/urc-plugin-repo/js/asset_accordion_min.js?ver=5.5.1
-
-		ADS
-		
-		// create a plugin for pulling images
-		//	- add a place to specify external images to be used as icons
-		//	- link to page
-
-		// signature - try if we can replace the content when viewed in mobile
-	*/
-	$js_array = array(
-		plugins_url().'/wp-smush-pro/app/assets/js/smush-lazy-load.min.js',
-		plugins_url().'/megamenu/js/maxmegamenu.js',
-		plugins_url().'/setup-social-toolbar/js/asset-min.js',
-		plugins_url().'/setup-youtube/js/asset-2-min.js',
-//		plugins_url().'/setup-video-block/js/asset.js',
-	);
-
-	if( is_array( $js_array ) ) {
-		setup_echo_javascripts( $js_array );
-	}
-
-}
-
-
 // NAVIGATORS | REMOVE
 if( !function_exists( 'setup_remove_navigators' ) ) {
  
@@ -363,7 +380,7 @@ if( !function_exists( 'setup_remove_navigators' ) ) {
 
 
 // CSS Minifier => http://ideone.com/Q5USEF + improvement(s)
-if( !function_exists( 'setup_minify_css' ) ) {
+/*if( !function_exists( 'setup_minify_css' ) ) {
 
     function setup_minify_css( $input ) {
 
@@ -411,7 +428,7 @@ if( !function_exists( 'setup_minify_css' ) ) {
 
     }
 
-}
+}*/
 
 
 //if( !function_exists( 'setup_remove_comments_from_css' ) ) {

@@ -20,8 +20,6 @@ require_once( 'urc-cta.php' );
 require_once( 'mobile-detect/Mobile_Detect.php' );
 require_once( 'codes/setup-mobile.php' );
 require_once( 'codes/setup-homepage-category-permalinks.php' );
-	//require_once( 'codes/setup-optimize.php' );
-	//require_once( 'codes/setup-optimize-2.php' );
 require_once( 'codes/setup_su_post_get.php' );
 require_once( 'codes/setup-paypal-buttons.php' );
 require_once( 'codes/spk_get_permalink.php' );
@@ -73,3 +71,10 @@ function setup_plugin_repository_function() {
  * ----------------------------------------------------------------------------------------- */
 add_filter( 'widget_text', 'do_shortcode' );
 
+
+/* --------------------------------------------------------------------------------------------
+ * | Get main WP plugins directory
+ * ----------------------------------------------------------------------------------------- */
+function setup_return_plugins_maindir() {
+	return plugin_dir_path( __DIR__ );
+}
