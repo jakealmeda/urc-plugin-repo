@@ -13,15 +13,14 @@ add_action( 'wp_print_styles', 'setup_dequeue_css_function', 100 );
 add_action( 'wp_enqueue_scripts', 'setup_dequeue_css_function' );
 add_action( 'wp_footer', 'setup_dequeue_css_function' );
 function setup_dequeue_css_function() {
+
 	// 'setup_log_style',
 	$css_ids = array( 'ea-style', 'wp-block-library', 'megamenu', 'setup_video_block_style' );
-
 
 	// check if user is signed in, dequeue if not signed in (enqueued if signed in)
 	if( !is_user_logged_in() ) {
 		$css_ids[] = 'dashicons';
 	}
-
 
 	foreach( $css_ids as $ids ) {//echo $ids.'<br />';
 		setup_check_enqueued_styles( $ids );	
@@ -33,12 +32,13 @@ function setup_dequeue_css_function() {
 #######################################################################################################################################
 #######################################################################################################################################
 #######################################################################################################################################
-	fix video block 	DONE
-	remove hardcoded directory path in navigation-cor.php   	DONE
-	remove all setup-log codes     DONE
-	include a list of plugins to remove in the spreadsheet
-	make ads work
-	proceed with the rest of the JS
+	below 768px is mobile - use jQuery hide/show sidebar & CTAs 	
+	fix video block 												DONE
+	remove hardcoded directory path in navigation-cor.php   		DONE
+	remove all setup-log codes     									DONE
+	include a list of plugins to remove in the spreadsheet			
+	make ads work 													DONE
+	proceed with the rest of the JS 								
 #######################################################################################################################################
 #######################################################################################################################################
 */
@@ -46,8 +46,18 @@ function setup_dequeue_css_function() {
 
 //INITIALIZE MOBILE DETECT PLUGIN
 $detect = new Mobile_Detect;
+
+if( $detect->isTablet()	|| !$detect->isMobile() ) {
+
+	// viewer is using tablet or desktop | full load
+	$mobile = 0;
+
+	// load jQuery to handle hiding/showing the sidebar and CTAs
+	add_action( 'wp_footer', 'setup_plug_showshide_sidebar_ctas' );
+
+} else {
 // Any mobile device (phones or tablets).
-if( $detect->isMobile() ) {
+//if( $detect->isMobile() ) {
 
 	$mobile = 1;
 
@@ -70,14 +80,14 @@ if( $detect->isMobile() ) {
 	add_action( 'wp_footer', 'setup_mobile_js_inline_footer', 1000 );
 
 	// CTA
-	add_action( 'genesis_before_content', 'setup_cta_icons_function' );
+	//add_action( 'genesis_before_content', 'setup_cta_icons_function' );
 
-} else {
+}/* else {
 
 	// viewer is using desktop
 	$mobile = 0;
 
-}
+}*/
 
 
 // INLINE STYLESHEET IN HEAD
@@ -114,11 +124,7 @@ function setup_inline_styles_in_head() {
 
 	    if( !empty( $main_css ) ) {
 
-	    	// not AWS
-			/*$lookie = array(
-				'/images/',
-				'/fonts/',
-			);*/
+	    	// initialize array
 			$lookie = array(
 				'/images/',
 				'/fonts/', //$this_dir_theme,
@@ -128,12 +134,13 @@ function setup_inline_styles_in_head() {
 		        
 		        //$replace_with = $look_dir.'assets'.$look_for;
 		        //$replace_with = $this_dir_theme.'assets'.$look_for; // AWS
-		        $replace_with = get_stylesheet_directory_uri().'/assets'.$look_for; // not AWS
+		        $replace_with = get_stylesheet_directory_uri().'/assets'.$look_for;
 		        $main_css = str_replace( '..'.$look_for, $replace_with, $main_css );
 
 	        }
 
 	        echo $main_css;
+	        
 	    }
 
 	    // MAILCHIMP
@@ -266,6 +273,7 @@ function setup_mobile_js_inline_footer() {
 		$urc_aws_plugdir.'/setup-social-toolbar/js/asset-min.js',
 		$urc_aws_plugdir.'/setup-youtube/js/asset-2-min.js',
 		$urc_aws_plugdir.'/setup-video-block/js/asset-min.js',
+		$urc_aws_plugdir.'/urc-plugin-repo/js/asset.js',
 	);
 	
 	if( is_array( $js_array ) ) {
@@ -348,12 +356,15 @@ function setup_echo_javascripts( $js_array ) {
 function setup_dequeue_enqueued_scripts_fn() {
 
 	global $wp_scripts;
-	//var_dump($wp_scripts);
+	
 	foreach( $wp_scripts->queue as $handle ) :
 		//echo $wp_scripts->queue['wplink'];
-		//echo $handle;
-		//echo '<hr>';
+
+		// use the line below to validate what scripts are enqueued
+		//echo $handle.'<hr>';
+
 		setup_check_enqueued_javascript( $handle );
+
 	endforeach;
 
 }
@@ -379,113 +390,22 @@ if( !function_exists( 'setup_remove_navigators' ) ) {
 }
 
 
-// CSS Minifier => http://ideone.com/Q5USEF + improvement(s)
-/*if( !function_exists( 'setup_minify_css' ) ) {
+// HANDLE HIDING/SHOWING OF SIDEBAR AND CTAs
+if( !function_exists( 'setup_plug_showshide_sidebar_ctas' ) ) {
 
-    function setup_minify_css( $input ) {
+	function setup_plug_showshide_sidebar_ctas() {
 
-        // https://gist.github.com/Rodrigo54/93169db48194d470188f
-
-        if(trim($input) === "") return $input;
-        return preg_replace(
-            array(
-                // Remove comment(s)
-                '#("(?:[^"\\\]++|\\\.)*+"|\'(?:[^\'\\\\]++|\\\.)*+\')|\/\*(?!\!)(?>.*?\*\/)|^\s*|\s*$#s',
-                // Remove unused white-space(s)
-                '#("(?:[^"\\\]++|\\\.)*+"|\'(?:[^\'\\\\]++|\\\.)*+\'|\/\*(?>.*?\*\/))|\s*+;\s*+(})\s*+|\s*+([*$~^|]?+=|[{};,>~]|\s(?![0-9\.])|!important\b)\s*+|([[(:])\s++|\s++([])])|\s++(:)\s*+(?!(?>[^{}"\']++|"(?:[^"\\\]++|\\\.)*+"|\'(?:[^\'\\\\]++|\\\.)*+\')*+{)|^\s++|\s++\z|(\s)\s+#si',
-                // Replace `0(cm|em|ex|in|mm|pc|pt|px|vh|vw|%)` with `0`
-                '#(?<=[\s:])(0)(cm|em|ex|in|mm|pc|pt|px|vh|vw|%)#si',
-                // Replace `:0 0 0 0` with `:0`
-                '#:(0\s+0|0\s+0\s+0\s+0)(?=[;\}]|\!important)#i',
-                // Replace `background-position:0` with `background-position:0 0`
-                '#(background-position):0(?=[;\}])#si',
-                // Replace `0.6` with `.6`, but only when preceded by `:`, `,`, `-` or a white-space
-                '#(?<=[\s:,\-])0+\.(\d+)#s',
-                // Minify string value
-                '#(\/\*(?>.*?\*\/))|(?<!content\:)([\'"])([a-z_][a-z0-9\-_]*?)\2(?=[\s\{\}\];,])#si',
-                '#(\/\*(?>.*?\*\/))|(\burl\()([\'"])([^\s]+?)\3(\))#si',
-                // Minify HEX color code
-                '#(?<=[\s:,\-]\#)([a-f0-6]+)\1([a-f0-6]+)\2([a-f0-6]+)\3#i',
-                // Replace `(border|outline):none` with `(border|outline):0`
-                '#(?<=[\{;])(border|outline):none(?=[;\}\!])#',
-                // Remove empty selector(s)
-                '#(\/\*(?>.*?\*\/))|(^|[\{\}])(?:[^\s\{\}]+)\{\}#s'
-            ),
-            array(
-                '$1',
-                '$1$2$3$4$5$6$7',
-                '$1',
-                ':0',
-                '$1:0 0',
-                '.$1',
-                '$1$3',
-                '$1$2$4$5',
-                '$1$2$3',
-                '$1:0',
-                '$1$2'
-            ),
-        $input);
-
-    }
-
-}*/
-
-
-//if( !function_exists( 'setup_remove_comments_from_css' ) ) {
-
-//	function setup_remove_comments_from_css( $output ) {
-
-//		$pattern = '!/\*[^*]*\*+([^/][^*]*\*+)*/!'; 
-
-//		$str = preg_replace( $pattern, '', $output );
-
-//	}
-
-//}
-
-
-// JAVASCRIPT MINIFIER
-/*if( !function_exists( 'setup_minify_javascript' ) ) {
-    
-    function setup_minify_javascript( $input ) {
-
-        if(trim($input) === "") return $input;
-        return preg_replace(
-            array(
-                // Remove comment(s)
-                '#\s*("(?:[^"\\\]++|\\\.)*+"|\'(?:[^\'\\\\]++|\\\.)*+\')\s*|\s*\/\*(?!\!|@cc_on)(?>[\s\S]*?\*\/)\s*|\s*(?<![\:\=])\/\/.*(?=[\n\r]|$)|^\s*|\s*$#',
-                // Remove white-space(s) outside the string and regex
-                '#("(?:[^"\\\]++|\\\.)*+"|\'(?:[^\'\\\\]++|\\\.)*+\'|\/\*(?>.*?\*\/)|\/(?!\/)[^\n\r]*?\/(?=[\s.,;]|[gimuy]|$))|\s*([!%&*\(\)\-=+\[\]\{\}|;:,.<>?\/])\s*#s',
-                // Remove the last semicolon
-                '#;+\}#',
-                // Minify object attribute(s) except JSON attribute(s). From `{'foo':'bar'}` to `{foo:'bar'}`
-                '#([\{,])([\'])(\d+|[a-z_][a-z0-9_]*)\2(?=\:)#i',
-                // --ibid. From `foo['bar']` to `foo.bar`
-                '#([a-z0-9_\)\]])\[([\'"])([a-z_][a-z0-9_]*)\2\]#i'
-            ),
-            array(
-                '$1',
-                '$1$2',
-                '}',
-                '$1$3',
-                '$1.$3'
-            ),
-        $input);
-
-    }
-
-}
-
-
-// JAVASCRIPT | REMOVE COMMENTS FROM FILE
-if( !function_exists( 'setup_remove_comments_from_js' ) ) {
-
-	function setup_remove_comments_from_js( $output ) {
-
-		$pattern = '/(?:(?:\/\*(?:[^*]|(?:\*+[^*\/]))*\*+\/)|(?:(?<!\:|\\\|\')\/\/.*))/';
-		$output = preg_replace( $pattern, '', $output );
-
-		return nl2br($output);
+	    // ACCORDION
+	    wp_register_script( 'setup_plug_sidebar_ctas', plugins_url( '../js/asset-desktab.js', __FILE__ ), NULL, '1.0', TRUE );
+		// Localize the script with new data
+		$translation_array = array(
+//			'cta_expanded' => setup_cta_expanded(),
+			'cta_expanded' => setup_original_subscribe(),
+		);
+	    wp_localize_script( 'setup_plug_sidebar_ctas', 'setup_plug_ctas', $translation_array );
+	    wp_enqueue_script( 'setup_plug_sidebar_ctas' );
+	    //wp_enqueue_script( 'setup_plugin_repo_accordion', plugins_url( 'js/asset.js', __FILE__ ) );
 
 	}
-}*/
+
+}

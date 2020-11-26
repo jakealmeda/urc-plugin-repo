@@ -31,10 +31,17 @@ if( in_array( $targ_file, apply_filters( 'active_plugins', get_option( 'active_p
 		require_once( $mobile_d_file );
 
 		//INITIALIZE MOBILE DETECT PLUGIN
-		$detects = new Mobile_Detect;
+		$detect = new Mobile_Detect;
 		// Any mobile device (phones or tablets).
-		if( $detects->isMobile() ) {
+		//if( $detect->isMobile() ) {
+		if( $detect->isTablet()	|| !$detect->isMobile() ) {
+
+			// tablet or not mobile (desktop)
+
+		} else {
 			
+			// mobile
+
 			remove_action( 'genesis_after_header', 'genesis_do_nav' );
 			remove_action( 'genesis_after_header', 'genesis_do_subnav' );
 

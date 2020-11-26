@@ -13,10 +13,11 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
 
-require_once( 'urc-cta.php' );
+
 /* ----------------------------------------------------------------------------
  * INCLUDE OTHER PLUGIN FILES
  * ------------------------------------------------------------------------- */
+	require_once( 'urc-subscribe.php' );
 require_once( 'mobile-detect/Mobile_Detect.php' );
 require_once( 'codes/setup-mobile.php' );
 require_once( 'codes/setup-homepage-category-permalinks.php' );
@@ -50,7 +51,7 @@ if( !shortcode_exists( 'spk_site_url' ) ) {
 /* --------------------------------------------------------------------------------------------
  * | ENQUEUE SCRIPTS
  * ----------------------------------------------------------------------------------------- */
-add_action( 'wp_footer', 'setup_plugin_repository_function', 2 );
+add_action( 'wp_footer', 'setup_plugin_repository_function', 4 );
 function setup_plugin_repository_function() {
 
 	$scripts = array( 'jquery-ui-accordion' );
@@ -61,7 +62,9 @@ function setup_plugin_repository_function() {
 	}
 
     // ACCORDION
-    wp_enqueue_script( 'setup_plugin_repo_accordion', plugins_url( 'js/asset_accordion_min.js', __FILE__ ) );
+    wp_register_script( 'setup_plugin_repo_accordion', plugins_url( 'js/asset.js', __FILE__ ), NULL, '1.0', TRUE );
+    wp_enqueue_script( 'setup_plugin_repo_accordion' );
+    //wp_enqueue_script( 'setup_plugin_repo_accordion', plugins_url( 'js/asset.js', __FILE__ ) );
 
 }
 
