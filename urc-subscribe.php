@@ -63,7 +63,7 @@ function urc_subscribe_function() {
 	}
 
 	// CTA | Free eBook Expanded
-	$cta_ebook_expanded = '<span id="cta_expander_target"></span>'; // setup_cta_expanded();
+	$cta_ebook_expanded = '<div id="cta_expander_target"></div>'; // setup_cta_expanded();
 
 	$content = $hide_on_these_pages.$cta_ebook_expanded.'<div class="group grid-cta-icon">
 			'.$cta_ebook_compressed.'

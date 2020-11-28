@@ -3,7 +3,7 @@
 function setup_original_subscribe() {
   // max-width:400px;
   return '<div class="group mailchimp-subscribe">
-  <div class="item-subscribe" style="border:1.5rem solid #fc0; padding:0.5rem;">
+  <div class="item-subscribe cta-subscribe">
   <div class="pretitle"><span class="fontsize-xsml">For A</span> <span class="fontsize-sml">LIMITED TIME ONLY</span><br><span class="fontsize-xsml">Get </span> <span class="fontsize-sml">FREE</span> <span class="fontsize-xsml">Copies Of My</span></div>
     <div class="photo"></div>
     <div class="title"><span class="fontsize-med">Enter Your Name &amp; Email Below for Instant Access:</span></div>
