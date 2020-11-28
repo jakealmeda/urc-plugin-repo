@@ -395,12 +395,15 @@ if( !function_exists( 'setup_plug_showshide_sidebar_ctas' ) ) {
 
 	function setup_plug_showshide_sidebar_ctas() {
 
+		global $post;
+
 	    // ACCORDION
 	    wp_register_script( 'setup_plug_sidebar_ctas', plugins_url( '../js/asset-desktab.js', __FILE__ ), NULL, '1.0', TRUE );
 		// Localize the script with new data
 		$translation_array = array(
-//			'cta_expanded' => setup_cta_expanded(),
-			'cta_expanded' => setup_original_subscribe(),
+			'cta_freeebook'		=> $post->post_name,
+//			'cta_expanded' 		=> setup_cta_expanded(),
+			'cta_expanded' 		=> setup_original_subscribe(),
 		);
 	    wp_localize_script( 'setup_plug_sidebar_ctas', 'setup_plug_ctas', $translation_array );
 	    wp_enqueue_script( 'setup_plug_sidebar_ctas' );

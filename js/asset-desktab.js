@@ -1,6 +1,7 @@
 (function($) {
 
-	var CTAexpanded = setup_plug_ctas.cta_expanded;
+	var CTAexpanded = setup_plug_ctas.cta_expanded,
+		CTApage 	= setup_plug_ctas.cta_freeebook;
 
 	// ON DOCUMENT LOAD
 	$( document ).ready( function() {
@@ -28,8 +29,10 @@
         	$( '.sidebar-primary' ).hide();
 
         	$( '#cta_compressed_target' ).hide();
-
-        	$( '#cta_expander_target' ).html( CTAexpanded );
+        	
+        	if( CTApage != 'free-ebook' ) {
+        		$( '#cta_expander_target' ).html( CTAexpanded );
+        	}
 
 	    } else {
 
