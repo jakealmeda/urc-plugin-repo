@@ -4,6 +4,22 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
 
+
+// HIDE SUBSCRIBE FIELDS IN THESE PAGES
+function urc_hide_subsribe_from_the_following_pages() {
+	return array(
+		'free-ebook',
+		'members-section',
+		'ebook',
+		'bookone-audio',
+		'booktwo-ebook',
+		'audioprogram1',
+		'audioprogram2',
+		'audioprogram3',
+		'audioprogram4',
+	);
+}
+
 require_once( 'mailchimp-embed.php' );
 //require_once( 'subscribe_200715.php' );
 
@@ -18,35 +34,8 @@ function urc_subscribe_function() {
 	//$free_ebook_page = setup_free_ebook_daw();
 	$products_page = get_permalink( get_page_by_path( "products" ) );
 
-	$list_pages = array(
-		'members-section',
-		'free-ebook',
-		'bookone-audio',
-		'booktwo-ebook',
-	);
-
-/*
-	DESKTOP
-
-	Normal ( AS IS - NO WORK NEEDED )
-	- Add 5 CTA icons side by side
-	- Retain subscribe box within sidebar area
-
-	Narrow ( <=767px )
-	- Remove Free ebook from 1 of the 5 CTA icons
-	- Replace Free ebook CTA with actual subscribe form
-
-	-----
-
-	MOBILE (THRU PHP)
-
-	Narrow
-	- Add 5 CTA icons top down
-	- Add option for inserting either the Subscribe box entirely or it's representative larger 1 CTA icon
-*/
-
 	global $post; //$post->ID
-	if( in_array( $post->post_name, $list_pages ) ) {
+	if( in_array( $post->post_name, urc_hide_subsribe_from_the_following_pages() ) ) {
 		$hide_on_these_pages = '';
 
 		// insert original subscribe pane if free-ebook page

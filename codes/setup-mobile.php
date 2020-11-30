@@ -402,6 +402,7 @@ if( !function_exists( 'setup_plug_showshide_sidebar_ctas' ) ) {
 		// Localize the script with new data
 		$translation_array = array(
 			'cta_freeebook'		=> $post->post_name,
+			'cta_hidepage'		=> urc_hide_subsribe_from_the_following_pages(),
 //			'cta_expanded' 		=> setup_cta_expanded(),
 			'cta_expanded' 		=> setup_original_subscribe(),
 		);
