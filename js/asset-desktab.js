@@ -54,7 +54,7 @@
 
 	    if( $(window).width() <= 767 ) {
 
-        	$( '.sidebar-primary' ).hide();
+        	//$( '.sidebar-primary' ).hide();
 
         	$( '#cta_compressed_target' ).hide();
         	
@@ -65,7 +65,7 @@
 
 	    } else {
 
-        	$( '.sidebar-primary' ).show();
+        	//$( '.sidebar-primary' ).show();
 
     		$( '#cta_compressed_target' ).show();
 
