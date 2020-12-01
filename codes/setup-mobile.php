@@ -28,21 +28,6 @@ function setup_dequeue_css_function() {
 
 }
 
-/*
-#######################################################################################################################################
-#######################################################################################################################################
-#######################################################################################################################################
-	below 768px is mobile - use jQuery hide/show sidebar & CTAs 	
-	fix video block 												DONE
-	remove hardcoded directory path in navigation-cor.php   		DONE
-	remove all setup-log codes     									DONE
-	include a list of plugins to remove in the spreadsheet			
-	make ads work 													DONE
-	proceed with the rest of the JS 								
-#######################################################################################################################################
-#######################################################################################################################################
-*/
-
 
 //INITIALIZE MOBILE DETECT PLUGIN
 $detect = new Mobile_Detect;
@@ -67,7 +52,7 @@ if( $detect->isTablet()	|| !$detect->isMobile() ) {
     // NAVIGATORS | REMOVE PRIMARY & SECONDARY
     // is being handled by navigator-cor.php found in themes/cor-2020/inc
     // NAVIGATOR | ADD MOBILE MENU
-    add_action( 'genesis_after_header', 'setup_add_mobile_menu_fn' ); 
+//    add_action( 'genesis_after_header', 'setup_add_mobile_menu_fn' );
 
     // LIST JS HANDLERS AND DEQUEUE THEM
     add_action( 'wp_print_scripts', 'setup_dequeue_enqueued_scripts_fn' );
@@ -194,7 +179,7 @@ function setup_inline_styles_in_head() {
 
 
 // REGISTER CUSTOM MENU FOR MOBILE
-add_action( 'init', 'setup_register_custom_menu_fn' );
+/*add_action( 'init', 'setup_register_custom_menu_fn' );
 function setup_register_custom_menu_fn() {
 
 	register_nav_menu( 'mobile-menu', __( 'Mobile Menu' ) );
@@ -223,7 +208,7 @@ function setup_add_mobile_menu_fn() {
 
 	}
 
-}
+}*/
 
 
 // ECHO JAVASCRIPTS
