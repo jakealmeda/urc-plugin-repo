@@ -40,9 +40,9 @@ function urc_subscribe_function() {
 		$hide_on_these_pages = '';
 
 		// insert original subscribe pane if free-ebook page
-		if( $post->post_name == 'free-ebook' ) {
+		/*if( $post->post_name == 'free-ebook' ) {
 			$hide_on_these_pages = setup_original_subscribe();
-		}
+		}*/
 
 		$cta_ebook_compressed = '';
 	} else {
