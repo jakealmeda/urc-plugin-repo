@@ -1,8 +1,9 @@
 (function($) {
 
-	var CTAexpanded = setup_plug_ctas.cta_expanded,
-		CTApage 	= setup_plug_ctas.cta_freeebook,
-		CTApageArr  = setup_plug_ctas.cta_hidepage,
+	var CTAexpanded 		= setup_plug_ctas.cta_expanded,
+		CTApage 			= setup_plug_ctas.cta_freeebook,
+		CTApageArr  		= setup_plug_ctas.cta_hidepage,
+		CTAfreeEbookIcons	= setup_plug_ctas.cta_fbicons,
 		CTALoopCounter, hideCTA;
 
 	// ON DOCUMENT LOAD
@@ -61,6 +62,8 @@
         	//if( CTApage != 'free-ebook' ) {
         	if( hideCTA != 2 ) {
         		$( '#cta_expander_target' ).html( CTAexpanded );
+        	} else {
+        		$( '#cta_expander_target' ).html( '' );
         	}
 
 	    } else {
@@ -69,7 +72,11 @@
 
     		$( '#cta_compressed_target' ).show();
 
-        	$( '#cta_expander_target' ).html( '' );
+    		if( CTApage == 'free-ebook' ) {
+    			$( '#cta_expander_target' ).html( CTAfreeEbookIcons );
+    		} else {
+        		$( '#cta_expander_target' ).html( '' );
+        	}
 
 	    }
 

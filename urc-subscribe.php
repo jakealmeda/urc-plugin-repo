@@ -27,53 +27,40 @@ require_once( 'mailchimp-embed.php' );
 add_action( 'genesis_before_content', 'urc_subscribe_function' );
 function urc_subscribe_function() {
 
-	$donate_page = get_permalink( '26341' ); // there might be more than 1 donate page with the same slug
+	//$donate_page = get_permalink( '26341' ); // there might be more than 1 donate page with the same slug
 
-	$upload_dir = wp_upload_dir();
 	//$free_ebook_page = get_permalink( get_page_by_path( "free-ebook" ) );
 	//$free_ebook_page = setup_free_ebook_daw();
-	$products_page = get_permalink( get_page_by_path( "products" ) );
-	$phone_coaching_page = get_permalink( get_page_by_path( "phone-coaching" ) );
 
 	global $post; //$post->ID
 	if( in_array( $post->post_name, urc_hide_subsribe_from_the_following_pages() ) ) {
+
 		$hide_on_these_pages = '';
 
 		// insert original subscribe pane if free-ebook page
-		/*if( $post->post_name == 'free-ebook' ) {
-			$hide_on_these_pages = setup_original_subscribe();
-		}*/
+		if( $post->post_name == 'free-ebook' ) {
 
-		$cta_ebook_compressed = '';
+			$hide_on_these_pages = setup_original_subscribe();
+
+		}
+
+		// COR wants to hide ctas
+		$corey_wants_to_hide_ctas = '';
+
 	} else {
+
 		$hide_on_these_pages = '';
 
+		// COR wants to hide ctas
 		// CTA | Free eBook Compressed | this should be removed if viewed on a desktop but narrow browser
-		$cta_ebook_compressed = setup_cta_compressed();
+		$corey_wants_to_hide_ctas = '<div class="group grid-cta-icon">'.setup_cta_compressed().urc_ctas().'</div>';
+
 	}
 
 	// CTA | Free eBook Expanded
 	$cta_ebook_expanded = '<div id="cta_expander_target"></div>'; // setup_cta_expanded();
 
-	$content = $hide_on_these_pages.$cta_ebook_expanded.'<div class="group grid-cta-icon">
-			'.$cta_ebook_compressed.'
-			<div class="module cta-icon"><div class="module-wrap">
-				<div><a class="item image link" href="'.$phone_coaching_page.'" data-type="page"><img src="'.$upload_dir[ "baseurl" ].'/cta-mobile-coaching-icon.png" alt="" class="wp-image-41163" width="50" height="50"></a></div>
-				<div class="items info"><div><a class="item title link" href="'.$phone_coaching_page.'" data-type="page" data-id="1519">Phone/Skype Coaching Session</a></div></div>
-			</div></div>
-			<div class="module cta-icon"><div class="module-wrap">
-				<div><a class="item image link" href="https://teespring.com/stores/coach-corey-wayne"><img src="'.$upload_dir[ "baseurl" ].'/cta-mobile-products-icon.png" alt="" class="wp-image-41161" width="50" height="50"></a></div>
-				<div class="items info"><div><a class="item title link" href="https://teespring.com/stores/coach-corey-wayne">Coach Corey Wayne Merchandise</a></div></div>
-			</div></div>
-			<div class="module cta-icon"><div class="module-wrap">
-				<div><a class="item image link" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=LKGTSSLYJ93J6" data-type="page" ><img src="'.$upload_dir[ "baseurl" ].'/cta-mobile-donate-icon.png" alt="" class="width="50" height="50"></a></div>
-				<div class="items info"><div><a class="item title link" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=LKGTSSLYJ93J6">Make A Donation</a></div></div>
-			</div></div>
-			<div class="module cta-icon"><div class="module-wrap">
-				<div><a class="item image link" href="'.$products_page.'" data-type="page"><img src="'.$upload_dir[ "baseurl" ].'/cta-mobile-all-books-icon.png" alt="" class="wp-image-41162" width="50" height="50"></a></div>
-				<div class="items info"><div><a class="item title link" href="'.$products_page.'" data-type="page">Books & Recommended Products</a></div></div>
-			</div></div>
-		</div>';
+	$content = $hide_on_these_pages.$cta_ebook_expanded.$corey_wants_to_hide_ctas;
 
     $content = apply_filters( 'the_content', $content );
     $content = str_replace( ']]>', ']]&gt;', $content );
@@ -82,6 +69,34 @@ function urc_subscribe_function() {
     ?><aside class="module subscribe"><?php
 	    echo $content;
 	?></aside><?php
+
+}
+
+
+function urc_ctas() {
+
+	$upload_dir = wp_upload_dir();
+	$donate_page = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=LKGTSSLYJ93J6';
+	$phone_coaching_page = get_permalink( get_page_by_path( "phone-coaching" ) );
+	//$phone_coaching_page = get_permalink( '1737' );
+	$products_page = get_permalink( get_page_by_path( "products" ) );
+
+	return '<div class="module cta-icon"><div class="module-wrap">
+				<div><a class="item image link" href="'.$phone_coaching_page.'" data-type="page"><img src="'.$upload_dir[ "baseurl" ].'/cta-mobile-coaching-icon.png" alt="" class="wp-image-41163" width="50" height="50"></a></div>
+				<div class="items info"><div><a class="item title link" href="'.$phone_coaching_page.'" data-type="page" data-id="1519">Phone/Skype Coaching Session</a></div></div>
+			</div></div>
+			<div class="module cta-icon"><div class="module-wrap">
+				<div><a class="item image link" href="https://teespring.com/stores/coach-corey-wayne"><img src="'.$upload_dir[ "baseurl" ].'/cta-mobile-products-icon.png" alt="" class="wp-image-41161" width="50" height="50"></a></div>
+				<div class="items info"><div><a class="item title link" href="https://teespring.com/stores/coach-corey-wayne">Coach Corey Wayne Merchandise</a></div></div>
+			</div></div>
+			<div class="module cta-icon"><div class="module-wrap">
+				<div><a class="item image link" href="'.$donate_page.'" data-type="page" ><img src="'.$upload_dir[ "baseurl" ].'/cta-mobile-donate-icon.png" alt="" class="width="50" height="50"></a></div>
+				<div class="items info"><div><a class="item title link" href="'.$donate_page.'">Make A Donation</a></div></div>
+			</div></div>
+			<div class="module cta-icon"><div class="module-wrap">
+				<div><a class="item image link" href="'.$products_page.'" data-type="page"><img src="'.$upload_dir[ "baseurl" ].'/cta-mobile-all-books-icon.png" alt="" class="wp-image-41162" width="50" height="50"></a></div>
+				<div class="items info"><div><a class="item title link" href="'.$products_page.'" data-type="page">Books & Recommended Products</a></div></div>
+			</div></div>';
 
 }
 

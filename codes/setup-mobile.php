@@ -390,6 +390,7 @@ if( !function_exists( 'setup_plug_showshide_sidebar_ctas' ) ) {
 			'cta_hidepage'		=> urc_hide_subsribe_from_the_following_pages(),
 //			'cta_expanded' 		=> setup_cta_expanded(),
 			'cta_expanded' 		=> setup_original_subscribe(),
+			'cta_fbicons'		=> '<div class="group grid-cta-icon">'.urc_ctas().'</div>',
 		);
 	    wp_localize_script( 'setup_plug_sidebar_ctas', 'setup_plug_ctas', $translation_array );
 	    wp_enqueue_script( 'setup_plug_sidebar_ctas' );
