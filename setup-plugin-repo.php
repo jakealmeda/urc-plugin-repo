@@ -2,7 +2,7 @@
 /**
  * Plugin Name: URC Plugin Repository
  * Description: Full control over URC plugins
- * Version: 1.0
+ * Version: 2.0.0
  * Author: Jake Almeda
  * Author URI: http://smarterwebpackages.com/
  * Network: true
