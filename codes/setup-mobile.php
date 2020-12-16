@@ -82,7 +82,8 @@ function setup_inline_styles_in_head() {
 	global $mobile;
 
 	// WORDPRESS CONTENT FOLDER
-	$this_dir_theme = WP_CONTENT_DIR.'/themes/cor-2020/';
+	//$this_dir_theme = WP_CONTENT_DIR.'/themes/cor-2020/';
+	$this_dir_theme = get_stylesheet_directory().'/';
 	
 	// WORDPRESS PLUGINS FOLDER
 	$urc_aws_plugdir = setup_return_plugins_maindir().'/';

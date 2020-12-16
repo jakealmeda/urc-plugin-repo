@@ -52,7 +52,7 @@
 			CTALoopCounter = 1;
 
 		}
-
+		
 	    if( $(window).width() <= 767 ) {
 
         	//$( '.sidebar-primary' ).hide();

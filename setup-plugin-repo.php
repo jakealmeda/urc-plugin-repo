@@ -2,7 +2,7 @@
 /**
  * Plugin Name: URC Plugin Repository
  * Description: Full control over URC plugins
- * Version: 2.0.0
+ * Version: 2.0.1
  * Author: Jake Almeda
  * Author URI: http://smarterwebpackages.com/
  * Network: true
@@ -17,8 +17,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 /* ----------------------------------------------------------------------------
  * INCLUDE OTHER PLUGIN FILES
  * ------------------------------------------------------------------------- */
-	require_once( 'urc-subscribe.php' );
-require_once( 'mobile-detect/Mobile_Detect.php' );
+require_once( 'urc-subscribe.php' );
+if( !class_exists( 'Mobile_Detect' ) ) {
+    require_once( 'mobile-detect/Mobile_Detect.php' );
+}
 require_once( 'codes/setup-mobile.php' );
 require_once( 'codes/setup-homepage-category-permalinks.php' );
 require_once( 'codes/setup_su_post_get.php' );
