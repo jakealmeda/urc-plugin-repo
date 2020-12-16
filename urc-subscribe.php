@@ -33,7 +33,8 @@ function urc_subscribe_function() {
 	//$free_ebook_page = setup_free_ebook_daw();
 
 	global $post; //$post->ID
-	if( in_array( $post->post_name, urc_hide_subsribe_from_the_following_pages() ) ) {
+	
+	if( $post && in_array( $post->post_name, urc_hide_subsribe_from_the_following_pages() ) ) {
 
 		$hide_on_these_pages = '';
 
