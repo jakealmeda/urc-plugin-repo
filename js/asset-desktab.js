@@ -4,7 +4,7 @@
 		CTApage 			= setup_plug_ctas.cta_freeebook,
 		CTApageArr  		= setup_plug_ctas.cta_hidepage,
 		CTAfreeEbookIcons	= setup_plug_ctas.cta_fbicons,
-		CTALoopCounter, hideCTA;
+		CTALoopCounter, hideCTA, ScreenSizer;
 
 	// ON DOCUMENT LOAD
 	$( document ).ready( function() {
@@ -37,6 +37,8 @@
 	// SIDEBAR
 	function setup_check_screensize( hideCTA ) {
 
+		ScreenSizer = $(window).width();
+
 		CTALoopCounter = 0;
 		if( CTALoopCounter == 0 ) {
 
@@ -53,18 +55,31 @@
 
 		}
 		
-	    if( $(window).width() <= 767 ) {
+	    if( ScreenSizer <= 768 ) {
 
         	//$( '.sidebar-primary' ).hide();
+        	if( CTApage != 'free-ebook' ) {
 
-        	$( '#cta_compressed_target' ).hide();
-        	
-        	//if( CTApage != 'free-ebook' ) {
-        	if( hideCTA != 2 ) {
-        		$( '#cta_expander_target' ).html( CTAexpanded );
-        	} else {
-        		$( '#cta_expander_target' ).html( '' );
-        	}
+	        	$( '#cta_compressed_target' ).hide();
+	        	
+	        	//if( CTApage != 'free-ebook' ) {
+	        	if( hideCTA != 2 ) {
+	        		$( '#cta_expander_target' ).html( CTAexpanded );
+	        	} else {
+	        		$( '#cta_expander_target' ).html( '' );
+	        	}
+
+	        } else {
+
+	        	// Free-eBook page | 615
+	        	//if( ScreenSizer <= 700 ) {
+
+	        		//$( '#cta_compressed_target' ).show();
+
+	        		$( '#cta_expander_target' ).html( CTAexpanded );
+
+	        	//}
+	        }
 
 	    } else {
 
