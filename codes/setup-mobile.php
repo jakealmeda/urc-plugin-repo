@@ -256,7 +256,7 @@ function setup_mobile_js_inline_footer() {
 		$urc_aws_plugdir.'/wp-smush-pro/app/assets/js/smush-lazy-load.min.js',
 		$urc_aws_plugdir.'/megamenu/js/maxmegamenu.js',
 		$urc_aws_plugdir.'/urc-social-toolbar/js/asset-min.js',
-		$urc_aws_plugdir.'/setup-youtube/js/asset-2-min.js',
+		$urc_aws_plugdir.'/urc-youtube/js/asset-2-min.js',
 		$urc_aws_plugdir.'/setup-video-block/js/asset-min.js',
 		$urc_aws_plugdir.'/urc-plugin-repo/js/asset.js',
 	);
