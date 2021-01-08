@@ -55,7 +55,7 @@
 
 		}
 		
-	    if( ScreenSizer <= 768 ) {
+	    if( ScreenSizer < 768 ) {
 
         	//$( '.sidebar-primary' ).hide();
         	if( CTApage != 'free-ebook' ) {
@@ -96,6 +96,5 @@
 	    }
 
 	}
-
 
 })( jQuery );

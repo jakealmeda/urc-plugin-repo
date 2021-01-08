@@ -32,7 +32,7 @@ function setup_dequeue_css_function() {
 //INITIALIZE MOBILE DETECT PLUGIN
 $detect = new Mobile_Detect;
 
-if( $detect->isTablet()	|| !$detect->isMobile() ) {
+if( $detect->isTablet() || !$detect->isMobile() ) {
 
 	// viewer is using tablet or desktop | full load
 	$mobile = 0;
@@ -41,9 +41,8 @@ if( $detect->isTablet()	|| !$detect->isMobile() ) {
 	add_action( 'wp_footer', 'setup_plug_showshide_sidebar_ctas' );
 
 } else {
-// Any mobile device (phones or tablets).
-//if( $detect->isMobile() ) {
 
+	// Any mobile device (phones or tablets).
 	$mobile = 1;
 
     // FORCE LAYOUT - REMOVE SIDEBAR
@@ -256,7 +255,7 @@ function setup_mobile_js_inline_footer() {
 	$js_array = array(
 		$urc_aws_plugdir.'/wp-smush-pro/app/assets/js/smush-lazy-load.min.js',
 		$urc_aws_plugdir.'/megamenu/js/maxmegamenu.js',
-		$urc_aws_plugdir.'/setup-social-toolbar/js/asset-min.js',
+		$urc_aws_plugdir.'/urc-social-toolbar/js/asset-min.js',
 		$urc_aws_plugdir.'/setup-youtube/js/asset-2-min.js',
 		$urc_aws_plugdir.'/setup-video-block/js/asset-min.js',
 		$urc_aws_plugdir.'/urc-plugin-repo/js/asset.js',
