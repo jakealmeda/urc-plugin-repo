@@ -40,7 +40,9 @@ function urc_subscribe_function() {
 
 		// insert original subscribe pane if free-ebook page
 		if( $post->post_name == 'free-ebook' ) {
-			if( $detect->isTablet()	|| !$detect->isMobile() ) {
+
+			$detects = new Mobile_Detect;
+			if( $detects->isTablet()	|| !$detects->isMobile() ) {
 				// do nothing
 			} else {
 				$hide_on_these_pages = setup_original_subscribe();
