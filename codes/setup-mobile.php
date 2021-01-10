@@ -41,7 +41,7 @@ if( $detect->isTablet() || !$detect->isMobile() ) {
 	add_action( 'wp_footer', 'setup_plug_showshide_sidebar_ctas' );
 
 } else {
-
+	
 	// Any mobile device (phones or tablets).
 	$mobile = 1;
 
@@ -223,10 +223,10 @@ function setup_mobile_js_inline_head() {
 		$urc_aws_incdir.'/js/jquery/ui/effect.min.js',
 		$urc_aws_incdir.'/js/jquery/ui/effect-slide.min.js',
 		$urc_aws_incdir.'/js/jquery/ui/effect-fade.min.js',
-		$urc_aws_incdir.'/js/jquery/ui/widget.min.js',
+//		$urc_aws_incdir.'/js/jquery/ui/widget.min.js',
 		$urc_aws_incdir.'/js/jquery/ui/accordion.min.js',
 	);
-
+	
 	if( is_array( $js_array ) ) {
 		setup_echo_javascripts( $js_array );
 	}
@@ -316,13 +316,13 @@ function setup_dequeue_scripts( $identifier ) {
 
 // ECHO JS SCRIPTS
 function setup_echo_javascripts( $js_array ) {
-
+	
 	if( is_array( $js_array ) ) {
 
 		?><script><?php
 
 			foreach( $js_array as $js ) {
-
+				
 				$o = file_get_contents( $js );
 				if( !empty( $o ) ) {
 					echo $o;

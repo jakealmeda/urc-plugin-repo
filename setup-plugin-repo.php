@@ -81,5 +81,6 @@ add_filter( 'widget_text', 'do_shortcode' );
  * | Get main WP plugins directory
  * ----------------------------------------------------------------------------------------- */
 function setup_return_plugins_maindir() {
-	return plugin_dir_path( __DIR__ );
+	//return plugin_dir_path( __DIR__ );
+	return WP_PLUGIN_DIR;
 }
