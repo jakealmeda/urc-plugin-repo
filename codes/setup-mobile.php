@@ -356,7 +356,7 @@ function setup_dequeue_enqueued_scripts_fn() {
 
 
 // NAVIGATORS | REMOVE
-if( !function_exists( 'setup_remove_navigators' ) ) {
+/*if( !function_exists( 'setup_remove_navigators' ) ) {
  
     function setup_remove_navigators() {
 			        
@@ -372,7 +372,7 @@ if( !function_exists( 'setup_remove_navigators' ) ) {
 
     }
     
-}
+}*/
 
 
 // HANDLE HIDING/SHOWING OF SIDEBAR AND CTAs
