@@ -39,7 +39,7 @@ function urc_subscribe_function() {
 		$hide_on_these_pages = '';
 
 		// insert original subscribe pane if free-ebook page
-		if( $post->post_name == 'free-ebook' ) {
+		/*if( $post->post_name == 'free-ebook' ) {
 
 			//INITIALIZE MOBILE DETECT PLUGIN
 			$detects = new Mobile_Detect;
@@ -49,7 +49,7 @@ function urc_subscribe_function() {
 				$hide_on_these_pages = setup_original_subscribe();
 			}
 
-		}
+		}*/
 
 		// COR wants to hide ctas
 		$corey_wants_to_hide_ctas = '';
@@ -188,18 +188,8 @@ function setup_free_ebook_daw() {
 /* ######################################################################################################
  * # BELOW 
  * ################################################################################################### */
-//INITIALIZE MOBILE DETECT PLUGIN
-$detects = new Mobile_Detect;
-if( $detects->isTablet() || !$detects->isMobile() ) {
-
-	// viewer is using tablet or desktop | full load
-	$mobile = 0;
-
-	// load jQuery to handle hiding/showing the sidebar and CTAs
-	add_action( 'wp_footer', 'setup_plug_showshide_sidebar_ctas' );
-
-}
-
+// load jQuery to handle hiding/showing the sidebar and CTAs
+add_action( 'wp_footer', 'setup_plug_showshide_sidebar_ctas' );
 // HANDLE HIDING/SHOWING OF SIDEBAR AND CTAs
 if( !function_exists( 'setup_plug_showshide_sidebar_ctas' ) ) {
 
