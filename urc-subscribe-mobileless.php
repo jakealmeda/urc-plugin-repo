@@ -84,8 +84,8 @@ function urc_ctas() {
 
 	$upload_dir = wp_upload_dir();
 	$donate_page = 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=LKGTSSLYJ93J6';
-	$phone_coaching_page = get_permalink( get_page_by_path( "phone-coaching" ) );
-	//$phone_coaching_page = get_permalink( '1737' );
+	//$phone_coaching_page = get_permalink( get_page_by_path( "phone-coaching" ) );
+	$phone_coaching_page = get_permalink( '22818' );
 	$products_page = get_permalink( get_page_by_path( "products" ) );
 
 	return '<div class="module cta-icon"><div class="module-wrap">
