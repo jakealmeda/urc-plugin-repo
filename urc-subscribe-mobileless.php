@@ -21,6 +21,7 @@ function urc_hide_subsribe_from_the_following_pages() {
 }
 
 require_once( 'mailchimp-embed.php' );
+require_once( 'md-test.php' );
 //require_once( 'subscribe_200715.php' );
 
 //add_action( 'genesis_before_content_sidebar_wrap', 'urc_subscribe_function' ); // original
