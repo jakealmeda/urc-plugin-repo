@@ -53,7 +53,7 @@ function urc_subscribe_function() {
 		}*/
 
 		// COR wants to hide ctas
-		$corey_wants_to_hide_ctas = '';
+		$we_want_to_hide_ctas = '';
 
 	} else {
 
@@ -61,14 +61,14 @@ function urc_subscribe_function() {
 
 		// COR wants to hide ctas
 		// CTA | Free eBook Compressed | this should be removed if viewed on a desktop but narrow browser
-		$corey_wants_to_hide_ctas = '<div class="group grid-cta-icon">'.setup_cta_compressed().urc_ctas().'</div>';
+		$we_want_to_hide_ctas = '<div class="group grid-cta-icon">'.setup_cta_compressed().urc_ctas().'</div>';
 
 	}
 
 	// CTA | Free eBook Expanded
 	$cta_ebook_expanded = '<div id="cta_expander_target"></div>'; // setup_cta_expanded();
 
-	$content = $hide_on_these_pages.$cta_ebook_expanded.$corey_wants_to_hide_ctas;
+	$content = $hide_on_these_pages.$cta_ebook_expanded.$we_want_to_hide_ctas;
 
     $content = apply_filters( 'the_content', $content );
     $content = str_replace( ']]>', ']]&gt;', $content );

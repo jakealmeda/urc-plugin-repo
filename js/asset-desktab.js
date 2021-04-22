@@ -57,20 +57,21 @@
 		
 	    if( ScreenSizer < 768 ) {
 
-        	/*if( CTApage != 'free-ebook' ) {
+        	if( CTApage != 'free-ebook' ) {
         		// Not Free eBook
 
 	        	$( '#cta_compressed_target' ).hide();
 	        	
 	        	//if( CTApage != 'free-ebook' ) {
 	        	if( hideCTA != 2 ) {
-	        		$( '#cta_expander_target' ).html( CTAfreeEbookIcons );
+	        		//$( '#cta_expander_target' ).html( CTAfreeEbookIcons );
+	        		$( '#cta_expander_target' ).html( CTAexpanded );
 	        	} else {
-	        		$( '#cta_expander_target' ).html( '' );
+	        		$( '#cta_expander_target' ).html();
 	        	}
 
-	        } else {*/
-	        if( CTApage == 'free-ebook' ) {
+	        } else {
+	        //if( CTApage == 'free-ebook' ) {
 	        	// Free-eBook page
         		$( '#cta_expander_target' ).html( CTAexpanded );
 
