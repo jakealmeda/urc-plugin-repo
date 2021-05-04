@@ -25,7 +25,7 @@ require_once( 'md-test.php' );
 //require_once( 'subscribe_200715.php' );
 
 //add_action( 'genesis_before_content_sidebar_wrap', 'urc_subscribe_function' ); // original
-add_action( 'genesis_before_content', 'urc_subscribe_function' );
+add_action( 'genesis_before_content_sidebar_wrap', 'urc_subscribe_function' );
 function urc_subscribe_function() {
 
 	//$donate_page = get_permalink( '26341' ); // there might be more than 1 donate page with the same slug
@@ -70,13 +70,13 @@ function urc_subscribe_function() {
 
 	$content = $hide_on_these_pages.$cta_ebook_expanded.$we_want_to_hide_ctas;
 
-    $content = apply_filters( 'the_content', $content );
+    //$content = apply_filters( 'the_content', $content );
     $content = str_replace( ']]>', ']]&gt;', $content );
 
     // OUTPUT
-    ?><aside class="module subscribe"><?php
+    ?><div class="module subscribe"><?php
 	    echo $content;
-	?></aside><?php
+	?></div><?php
 
 }
 
