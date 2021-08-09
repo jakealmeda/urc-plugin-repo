@@ -1,13 +1,16 @@
 <?php 
 
 function setup_original_subscribe() {
+
+  $leakypaywalls = do_shortcode( '[leaky_paywall_register_form level_id=0]' );
+
   // max-width:400px;
-  return '<div class="item-subscribe">
+  return '<div class="item-subscribe cta-subscribe">
 <div class="pretitle"><span class="fontsize-xsml">For A</span> <span class="fontsize-sml">LIMITED TIME ONLY</span><br><span class="fontsize-xsml">Get </span> <span class="fontsize-sml">FREE</span> <span class="fontsize-xsml">Copies Of My</span></div>
     <div class="photo"></div>
     <div class="title"><span class="fontsize-med">Enter Your Name &amp; Email Below for Instant Access:</span></div>
 
-[leaky_paywall_register_form level_id=0]
+'.$leakypaywalls.'
 
 <div class="margin-bottom" style="text-align:center;">Already A Member? <a href="https://understandingrelationships.com/login">Click Here</a> To Login</div>
   
