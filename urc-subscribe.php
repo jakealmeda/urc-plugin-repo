@@ -17,6 +17,7 @@ function urc_hide_subsribe_from_the_following_pages() {
 		'audioprogram2',
 		'audioprogram3',
 		'audioprogram4',
+		'login',
 	);
 }
 
