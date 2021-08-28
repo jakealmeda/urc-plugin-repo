@@ -17,9 +17,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 /* ----------------------------------------------------------------------------
  * INCLUDE OTHER PLUGIN FILES
  * ------------------------------------------------------------------------- */
-if( !class_exists( 'Mobile_Detect' ) ) {
+/*if( !class_exists( 'Mobile_Detect' ) ) {
     require_once( 'mobile-detect/Mobile_Detect.php' );
-}
+}*/
 //require_once( 'codes/setup-mobile.php' );
 //require_once( 'urc-subscribe.php' );
 require_once( 'urc-subscribe-mobileless.php' );

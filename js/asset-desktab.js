@@ -1,7 +1,7 @@
 (function($) {
 
-	var CTAexpanded 		= setup_plug_ctas.cta_expanded,
-		CTApage 			= setup_plug_ctas.cta_freeebook,
+	//var CTAexpanded 		= setup_plug_ctas.cta_expanded;
+	var	CTApage 			= setup_plug_ctas.cta_freeebook,
 		CTApageArr  		= setup_plug_ctas.cta_hidepage,
 		CTAfreeEbookIcons	= setup_plug_ctas.cta_fbicons,
 		CTALoopCounter, hideCTA, ScreenSizer;
@@ -63,19 +63,19 @@
 	        	$( '#cta_compressed_target' ).hide();
 	        	
 	        	//if( CTApage != 'free-ebook' ) {
-	        	if( hideCTA != 2 ) {
+	        	/*if( hideCTA != 2 ) {
 	        		//$( '#cta_expander_target' ).html( CTAfreeEbookIcons );
 	        		$( '#cta_expander_target' ).html( CTAexpanded );
 	        	} else {
 	        		$( '#cta_expander_target' ).html();
-	        	}
+	        	}*/
 
-	        } else {
+	        }/* else {
 	        //if( CTApage == 'free-ebook' ) {
 	        	// Free-eBook page
         		$( '#cta_expander_target' ).html( CTAexpanded );
 
-	        }
+	        }*/
 
 	        desktab_show_hide( 'hide' );
 

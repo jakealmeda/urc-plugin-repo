@@ -21,12 +21,13 @@ function urc_hide_subsribe_from_the_following_pages() {
 	);
 }
 
-require_once( 'mailchimp-embed.php' );
+//require_once( 'mailchimp-embed.php' );
 //require_once( 'md-test.php' );
-//require_once( 'subscribe_200715.php' );
+
 
 //add_action( 'genesis_before_content_sidebar_wrap', 'urc_subscribe_function' ); // original
-add_action( 'genesis_before_content_sidebar_wrap', 'urc_subscribe_function' );
+add_action( 'genesis_before_content_sidebar_wrap', 'urc_subscribe_function', 30 );
+//add_action( 'genesis_before_content', 'urc_subscribe_function', 30 );
 function urc_subscribe_function() {
 
 	//$donate_page = get_permalink( '26341' ); // there might be more than 1 donate page with the same slug
@@ -75,7 +76,7 @@ function urc_subscribe_function() {
     $content = str_replace( ']]>', ']]&gt;', $content );
 
     // OUTPUT
-    ?><div class="module subscribe"><?php
+    ?><div class="module-cta" style="background-color:pink;"><?php
 	    echo $content;
 	?></div><?php
 
@@ -206,7 +207,7 @@ if( !function_exists( 'setup_plug_showshide_sidebar_ctas' ) ) {
 			'cta_freeebook'		=> $post->post_name,
 			'cta_hidepage'		=> urc_hide_subsribe_from_the_following_pages(),
 //			'cta_expanded' 		=> setup_cta_expanded(),
-			'cta_expanded' 		=> setup_original_subscribe(),
+//			'cta_expanded' 		=> setup_original_subscribe(),
 			'cta_fbicons'		=> '<div class="group grid-cta-icon">'.urc_ctas().'</div>',
 		);
 	    wp_localize_script( 'setup_plug_sidebar_ctas', 'setup_plug_ctas', $translation_array );
