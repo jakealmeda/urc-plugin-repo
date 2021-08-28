@@ -26,7 +26,7 @@ function urc_hide_subsribe_from_the_following_pages() {
 
 
 //add_action( 'genesis_before_content_sidebar_wrap', 'urc_subscribe_function' ); // original
-add_action( 'genesis_before_content_sidebar_wrap', 'urc_subscribe_function', 30 );
+add_action( 'genesis_before_content_sidebar_wrap', 'urc_subscribe_function', 20 );
 //add_action( 'genesis_before_content', 'urc_subscribe_function', 30 );
 function urc_subscribe_function() {
 
