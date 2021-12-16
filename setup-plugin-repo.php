@@ -2,7 +2,7 @@
 /**
  * Plugin Name: URC Plugin Repository
  * Description: Full control over URC plugins
- * Version: 2.0.2
+ * Version: 2.0.3
  * Author: Jake Almeda
  * Author URI: http://smarterwebpackages.com/
  * Network: true
@@ -48,6 +48,7 @@ if( !shortcode_exists( 'spk_site_url' ) ) {
 /* --------------------------------------------------------------------------------------------
  * | ENQUEUE SCRIPTS
  * ----------------------------------------------------------------------------------------- */
+/*
 add_action( 'wp_footer', 'setup_plugin_repository_function', 4 );
 function setup_plugin_repository_function() {
 
@@ -64,6 +65,7 @@ function setup_plugin_repository_function() {
     //wp_enqueue_script( 'setup_plugin_repo_accordion', plugins_url( 'js/asset.js', __FILE__ ) );
 
 }
+*/
 
 
 /* --------------------------------------------------------------------------------------------
